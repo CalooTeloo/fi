@@ -1,0 +1,12 @@
+<!-- Imagen del Pokémon -->
+<div class="pokemon-image-container">
+    <div class="pokemon-frame">
+        <img [src]=imageUrl class="pokemon-img animate-pokemon" />
+    </div>
+</div>
+
+<!-- Botones para cambiar de Pokémon -->
+<div class="button-container">
+    <button class="btn2d" (click)="previousPokemon()">◀ Anterior</button>
+    <button class="btn2d" (click)="nextPokemon()">Siguiente ▶</button>
+</div>

@@ -1,0 +1,40 @@
+<div class="pokedex-container">
+    <div class="pokemon-card">
+        <div class="pokemon-header">
+            <h2 class="pokemon-name">{{nombrePokemon}}</h2>
+            <p class="pokemon-id">ID: {{idPokemon}}</p>
+            <p class="pokemon-type">{{tipoPokemon}}</p>
+        </div>
+
+
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>HP</h3>
+                <div class="stat-bar">
+                    <div class="bar-background">
+                        <div class="bar-health" [style.width]="vidaPoke + '%'"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <h3>Defense</h3>
+                <div class="stat-bar">
+                    <div class="bar-background">
+                        <div class="bar-defense" [style.width]="protePoke + '%'"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <h3>Attack</h3>
+                <div class="stat-bar">
+                    <div class="bar-background">
+                        <div class="bar-attack" [style.width]="ataPoke + '%'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
