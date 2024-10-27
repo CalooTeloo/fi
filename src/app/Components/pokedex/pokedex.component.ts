@@ -1,24 +1,41 @@
+// pokedex.component.ts
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pokedex',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './pokedex.component.html',
-  styleUrl: './pokedex.component.css'
+  styleUrls: ['./pokedex.component.css']
 })
 export class PokedexComponent {
   @Input({ required: true }) imageUrl = '';
+  @Output() pokemonId: EventEmitter<number> = new EventEmitter();
 
-  @Output() pokemonId: EventEmitter<number> = new EventEmitter;
-
+  isAnimating = false;
 
   previousPokemon() {
-    this.pokemonId.emit(-1);
-
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      this.pokemonId.emit(-1);
+      setTimeout(() => this.isAnimating = false, 1000);
+    }
   }
-  nextPokemon() {
-    this.pokemonId.emit(+1);
 
+  nextPokemon() {
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      this.pokemonId.emit(1);
+      setTimeout(() => this.isAnimating = false, 1000);
+    }
+  }
+
+  handleKeyPress(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') {
+      this.previousPokemon();
+    } else if (event.key === 'ArrowRight') {
+      this.nextPokemon();
+    }
   }
 }

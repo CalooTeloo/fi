@@ -7,7 +7,63 @@
 
 .pokemon-frame {
     width: 190px;
-    height: 190px;
+    height: 190px;.pokemon-container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .pokemon-frame {
+        background: linear-gradient(145deg, #444, #222);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px auto;
+    width: 200px;
+    height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+    .pokemon-img {
+        width: 150px;
+        height: 150px;
+    object-fit: contain;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+}
+
+    .controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    .control-btn {
+        font-family: 'Press Start 2P', cursive;
+        background: #333;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+}
+
+    .control-btn:hover {
+        background: #444;
+        transform: scale(1.05);
+    }
+    
+    .control-btn:active {
+        transform: scale(0.95);
+    }
     background: #ffcc01;
     padding: 10px;
     border-radius: 100rem;
