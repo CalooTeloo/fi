@@ -1,52 +1,13 @@
 // grafico.component.ts
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-grafico',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="stats-container">
-      <div class="pokemon-header">
-        <h2 class="pokemon-name">{{nombrePokemon}}</h2>
-        <div class="pokemon-type-badges">
-          <span class="pokemon-type-badge" [class]="'type-' + tipoPokemon.toLowerCase()">
-            {{tipoPokemon}}
-          </span>
-        </div>
-      </div>
-
-      <div class="stats-display">
-        <div class="stat-group">
-          <p class="stat-label">HP</p>
-          <div class="stat-bar-container">
-            <div class="stat-bar" [style.width.%]="vidaPoke">
-              <div class="stat-value">{{vidaPoke}}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="stat-group">
-          <p class="stat-label">ATTACK</p>
-          <div class="stat-bar-container">
-            <div class="stat-bar" [style.width.%]="ataPoke">
-              <div class="stat-value">{{ataPoke}}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="stat-group">
-          <p class="stat-label">DEFENSE</p>
-          <div class="stat-bar-container">
-            <div class="stat-bar" [style.width.%]="protePoke">
-              <div class="stat-value">{{protePoke}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: './grafico.component.html',
   styleUrls: ['./grafico.component.css']
 })
 export class GraficoComponent {
@@ -55,4 +16,30 @@ export class GraficoComponent {
   @Input() ataPoke: number = 80;
   @Input() nombrePokemon: string = 'Unknown';
   @Input() tipoPokemon: string = 'Normal';
+  @Input() pokemonId: number = 1; // Ahora recibimos el ID como número
+  mostrandoDetalles: boolean = false;
+
+  // Método para formatear el ID
+  formatPokemonId(): string {
+    return '#' + this.pokemonId.toString().padStart(3, '0');
+  }
+
+  // Método para mostrar detalles
+  mostrarDetalles() {
+    this.mostrandoDetalles = !this.mostrandoDetalles;
+    console.log(`Mostrando detalles del Pokémon ${this.formatPokemonId()}`);
+  }
+
+  // Método para obtener el color del tipo
+  getTipoColor(): string {
+    const tipoColores: { [key: string]: string } = {
+      'Agua 💧': '#4592c4',
+      'Fuego 🔥': '#fd7d24',
+      'Planta 🌱': '#9bcc50',
+      // Añade más tipos según necesites
+    };
+    return tipoColores[this.tipoPokemon] || '#666666';
+  }
+
+
 }

@@ -1,133 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-.pokedex-view {
-    max-width: 800px;
-    height: 90vh;
-    margin: 20px auto;
-    background-color: #DC0A2D;
-    border: 20px solid #CC0000;
-    border-radius: 15px;
-    box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-    transform: perspective(1000px) rotateY(5deg);
-}
-
-.top-lights {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    display: flex;
-    gap: 10px;
-}
-
-.main-light {
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(#7FAFFF, #4169E1);
-    border-radius: 50%;
-    border: 5px solid white;
-    animation: glow 2s infinite;
-}
-
-.small-lights {
+.decorative-lights {
     display: flex;
     gap: 15px;
-    margin-left: 20px;
-    align-items: center;
+    margin-bottom: 20px;
 }
 
-.small-light {
-    width: 15px;
-    height: 15px;
+.light {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid #333;
+    animation: glow 1.5s infinite alternate;
 }
 
-.red {
-    background-color: #FF0000;
+.light-blue {
+    background-color: #4592c4;
+    animation-delay: 0s;
 }
 
-.yellow {
-    background-color: #FFD700;
+.light-red {
+    background-color: #fd7d24;
+    animation-delay: 0.5s;
 }
 
-.green {
-    background-color: #32CD32;
-}
-
-.title {
-    font-family: 'Press Start 2P', cursive;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    font-size: 1.5em;
-    margin-top: 60px;
-}
-
-.pokedex {
-    background-color: #FF1111;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
-}
-
-.graph {
-    background-color: #FF1111;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
-}
-
-.divider {
-    height: 4px;
-    background: linear-gradient(90deg, #333, #666, #333);
-    margin: 10px 0;
+.light-yellow {
+    background-color: #ffd700;
+    animation-delay: 1s;
 }
 
 @keyframes glow {
-    0% {
-        box-shadow: 0 0 5px #7FAFFF;
+    from {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+            0 0 10px rgba(255, 255, 255, 0.5);
     }
 
-    50% {
-        box-shadow: 0 0 20px #7FAFFF, 0 0 30px #4169E1;
-    }
-
-    100% {
-        box-shadow: 0 0 5px #7FAFFF;
+    to {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+            0 0 30px rgba(255, 255, 255, 0.8);
     }
 }
 
-.controls {
+.pokedex-view {
+    max-width: 576px;
+    min-height: 110vh;
+    background-color: #cc0000;
+    border: 3px solid black;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
     gap: 20px;
-    margin: 20px 0;
-}
-
-.d-pad {
-    width: 100px;
-    height: 100px;
+    box-shadow:
+        inset 0 0 50px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
     position: relative;
-    margin: 20px;
+    overflow: hidden;
 }
 
-.d-pad button {
-    position: absolute;
-    background: #222;
-    border: none;
+.title {
+    font-size: 2rem;
+    font-weight: 500;
+    font-family: 'Press Start 2P', cursive;
     color: white;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    transition: 0.2s;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+    animation: titleGlow 2s infinite alternate;
 }
 
-.d-pad button:active {
-    transform: scale(0.9);
-    background: #444;
+@keyframes titleGlow {
+    from {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    to {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3),
+            0 0 10px rgba(255, 255, 255, 0.5);
+    }
 }

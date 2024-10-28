@@ -1,13 +1,18 @@
 <section class="pokedex-view">
-    <span class="title">Pokedex</span>
+    <span class="title">Pokédex</span>
+
+    <div class="decorative-lights">
+        <div class="light light-blue"></div>
+        <div class="light light-red"></div>
+        <div class="light light-yellow"></div>
+    </div>
+
     <section class="pokedex">
-        <app-pokedex  [imageUrl]=pokemonImagen (pokemonId)="handlePokemon($event)"  ></app-pokedex>
-        <span class="point" ></span>
-        <span class="point" ></span>
-    </section>
-    
-    <section class="graph"> 
-        <app-grafico></app-grafico>
+        <app-pokedex [imageUrl]=pokemonImagen (pokemonId)="handlePokemon($event)">
+        </app-pokedex>
     </section>
 
+    <section class="graph">
+        <app-grafico [pokemonId]="pokemonId"></app-grafico>
+    </section>
 </section>

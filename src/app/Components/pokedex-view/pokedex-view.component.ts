@@ -11,7 +11,13 @@ import { GraficoComponent } from '../grafico/grafico.component';
 })
 export class PokedexViewComponent {
   pokemonId: number = 1;
-  pokemonImagen: string = '';
+  pokemonImagen: string = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + this.pokemonId + '.png';
+
+  handlePokemon(evento: number): void {
+    this.pokemonId += evento;
+    if (this.pokemonId < 1) this.pokemonId = 1;
+    this.pokemonImagen = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + this.pokemonId + '.png';
+  }
 
   constructor() {
     this.updatePokemonImage();
@@ -26,10 +32,8 @@ export class PokedexViewComponent {
     }
   }
 
-  handlePokemon(evento: number): void {
-    this.pokemonId = Math.max(1, this.pokemonId + evento);
-    this.updatePokemonImage();
-  }
+
+
 
   private updatePokemonImage(): void {
     this.pokemonImagen = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemonId}.png`;
