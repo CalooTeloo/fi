@@ -1,18 +1,49 @@
-<section class="pokedex-view">
-    <span class="title">Pokédex</span>
+<div class="pokedex-container">
+    <div class="pokedex-outer">
+        <!-- Luces indicadoras superiores -->
+        <div class="top-lights">
+            <div class="big-light">
+                <div class="light-reflect"></div>
+            </div>
+            <div class="small-lights">
+                <div class="small-light red"></div>
+                <div class="small-light yellow"></div>
+                <div class="small-light green"></div>
+            </div>
+        </div>
 
-    <div class="decorative-lights">
-        <div class="light light-blue"></div>
-        <div class="light light-red"></div>
-        <div class="light light-yellow"></div>
+        <!-- Pantalla principal -->
+        <div class="main-screen-section">
+            <div class="screen-border">
+                <app-pokedex [imageUrl]="pokemonImagen" (pokemonId)="handlePokemon($event)">
+                </app-pokedex>
+            </div>
+        </div>
+
+        <!-- Separador con bisagra -->
+        <div class="pokedex-divider">
+            <div class="hinge"></div>
+            <div class="hinge"></div>
+        </div>
+
+        <!-- Pantalla de estadísticas -->
+        <div class="stats-screen-section">
+            <app-grafico></app-grafico>
+        </div>
+
+        <!-- Controles inferiores -->
+        <div class="bottom-controls">
+            <div class="d-pad">
+                <button class="d-pad-up"></button>
+                <button class="d-pad-right"></button>
+                <button class="d-pad-down"></button>
+                <button class="d-pad-left"></button>
+                <div class="d-pad-center"></div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn"></button>
+                <button class="action-btn"></button>
+            </div>
+        </div>
     </div>
-
-    <section class="pokedex">
-        <app-pokedex [imageUrl]=pokemonImagen (pokemonId)="handlePokemon($event)">
-        </app-pokedex>
-    </section>
-
-    <section class="graph">
-        <app-grafico [pokemonId]="pokemonId"></app-grafico>
-    </section>
-</section>
+</div>

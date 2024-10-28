@@ -1,12 +1,23 @@
-<!-- Imagen del Pokémon -->
-<div class="pokemon-image-container">
-    <div class="pokemon-frame">
-        <img [src]=imageUrl class="pokemon-img animate-pokemon" />
+<div class="pokedex-screen">
+    <div class="screen-lights">
+        <div class="light"></div>
+        <div class="light"></div>
     </div>
-</div>
 
-<!-- Botones para cambiar de Pokémon -->
-<div class="button-container">
-    <button class="btn2d" (click)="previousPokemon()">◀ Anterior</button>
-    <button class="btn2d" (click)="nextPokemon()">Siguiente ▶</button>
+    <div class="screen-container">
+        <div class="screen-overlay"></div>
+        <img [src]="imageUrl" [class.animate-pokemon]="isAnimating" (load)="onImageLoad()" alt="Pokemon"
+            class="pokemon-sprite" />
+        <div class="screen-glare"></div>
+    </div>
+
+    <div class="control-panel">
+        <button class="nav-button prev" (click)="previousPokemon()" [disabled]="isLoading">
+            ◀
+        </button>
+        <div class="center-circle"></div>
+        <button class="nav-button next" (click)="nextPokemon()" [disabled]="isLoading">
+            ▶
+        </button>
+    </div>
 </div>

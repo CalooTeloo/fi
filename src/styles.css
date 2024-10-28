@@ -1,34 +1,44 @@
-body {
-    margin: 0;
-    padding: 20px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    min-height: 100vh;
-    font-family: 'Press Start 2P', cursive;
-}
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-.stat-value {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    font-size: 0.8rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+:root {
+    --primary-color: #dc0a2d;
+    --secondary-color: #98FF98;
+    --text-color: #333;
+    --screen-color: #98cb98;
+    --border-color: #95a5a6;
 }
 
-/* Añadir animación de hover para elementos interactivos */
-.pokemon-card:hover {
-    transform: translateY(-5px);
-    transition: transform 0.3s ease;
+body {
+    font-family: 'Press Start 2P', cursive;
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-.stat-item:hover .bar-background {
-    transform: scale(1.02);
-    transition: transform 0.3s ease;
+/* Utilidades globales */
+.pixel-border {
+    border: 4px solid var(--border-color);
+    image-rendering: pixelated;
+}
+
+.screen-shadow {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.button-hover {
+    transition: all 0.2s ease;
+}
+
+.button-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
