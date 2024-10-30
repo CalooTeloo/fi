@@ -1,47 +1,47 @@
 /* src/app/Components/pokedex-view/pokedex-view.component.css */
+
+:root {
+    --pokedex-red: #CE1C24;
+    --pokedex-dark-red: #AB1A22;
+    --screen-bg: #9CDC8F;
+    --border-color: #222222;
+    --button-blue: #2F71B9;
+    --button-green: #4CAF50;
+    --button-yellow: #FFD700;
+}
+
+body {
+    background: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+}
+
 .pokedex-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a, #333);
     padding: 20px;
-    font-family: 'Press Start 2P', cursive;
 }
 
 .pokedex-outer {
-    width: 900px;
-    height: 650px;
-    background: #dc0a2d;
+    width: 800px;
+    height: 600px;
+    background: var(--pokedex-red);
     border-radius: 20px;
     position: relative;
-    padding: 25px;
+    overflow: hidden;
     box-shadow:
-        -5px -5px 15px rgba(255, 255, 255, 0.1),
-        5px 5px 15px rgba(0, 0, 0, 0.4),
-        inset 0 0 20px rgba(0, 0, 0, 0.2);
-    transform: perspective(1000px) rotateX(10deg);
-    transition: all 0.3s ease;
-    border: 2px solid #b30000;
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
 }
 
-.pokedex-outer:hover {
-    transform: perspective(1000px) rotateX(5deg) translateY(-10px);
-    box-shadow:
-        -8px -8px 20px rgba(255, 255, 255, 0.1),
-        8px 8px 20px rgba(0, 0, 0, 0.5),
-        inset 0 0 25px rgba(0, 0, 0, 0.2);
-}
-
-/* Luces superiores */
-.top-lights {
+/* Top section */
+.top-section {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    padding: 15px;
-    background: #b30000;
-    border-radius: 15px 15px 5px 5px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
 }
 
 .big-light {
@@ -49,175 +49,119 @@
     height: 70px;
     background: radial-gradient(circle at 30% 30%, #7ec0ee, #4a90e2);
     border-radius: 50%;
-    border: 5px solid #fff;
-    position: relative;
+    border: 5px solid white;
     box-shadow:
-        0 0 15px #7ec0ee,
-        inset 0 0 10px rgba(0, 0, 0, 0.3);
-    animation: glow 2s infinite;
-}
-
-.light-reflect {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    top: 10px;
-    left: 10px;
-    filter: blur(2px);
+        0 0 10px #4a90e2,
+        inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .small-lights {
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
 .small-light {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 10px currentColor;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.red {
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
+}
+
+.yellow {
+    background: radial-gradient(circle at 30% 30%, #feca57, #ff9ff3);
+}
+
+.green {
+    background: radial-gradient(circle at 30% 30%, #48dbfb, #0abde3);
+}
+
+/* Main screen */
+.main-screen {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.screen-container {
+    background: var(--screen-bg);
+    height: 300px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     overflow: hidden;
 }
 
-.small-light::after {
-    content: '';
+.screen-overlay {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 8px;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    filter: blur(1px);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.1) 2%,
+            transparent 2%,
+            transparent 98%,
+            rgba(255, 255, 255, 0.1) 98%,
+            rgba(255, 255, 255, 0.1) 100%);
+    pointer-events: none;
 }
 
-.red {
-    background: radial-gradient(circle at 30% 30%, #ff0000, #cc0000);
-    animation: blink 2s infinite;
-}
-
-.yellow {
-    background: radial-gradient(circle at 30% 30%, #ffff00, #cccc00);
-    animation: blink 2s infinite 0.5s;
-}
-
-.green {
-    background: radial-gradient(circle at 30% 30%, #00ff00, #00cc00);
-    animation: blink 2s infinite 1s;
-}
-
-/* Pantalla principal */
-.main-screen-section {
-    background: #ffffff;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 15px 0;
-    box-shadow:
-        inset 0 0 20px rgba(0, 0, 0, 0.3),
-        0 5px 15px rgba(0, 0, 0, 0.2);
-    border: 3px solid #b30000;
-}
-
-/* Separador con bisagra */
-.pokedex-divider {
-    width: 100%;
-    height: 25px;
-    background: linear-gradient(to bottom, #b30424, #8b0000);
-    display: flex;
-    justify-content: space-between;
-    padding: 0 60px;
-    margin: 15px 0;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-.hinge {
-    width: 35px;
-    height: 100%;
-    background: linear-gradient(to right, #6b0000, #8b0000, #6b0000);
-    border-radius: 5px;
-    box-shadow:
-        inset 0 0 5px rgba(0, 0, 0, 0.5),
-        0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-/* Controles inferiores */
-.bottom-controls {
+/* Controls section */
+.controls-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background: #b30000;
-    border-radius: 15px;
-    box-shadow:
-        inset 0 2px 5px rgba(0, 0, 0, 0.3),
-        0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .d-pad {
-    position: relative;
     width: 120px;
     height: 120px;
+    position: relative;
+    background: var(--border-color);
+    border-radius: 50%;
 }
 
 .d-pad button {
     position: absolute;
-    width: 35px;
-    height: 35px;
-    background: linear-gradient(145deg, #333, #222);
+    width: 40px;
+    height: 40px;
+    background: #444;
     border: none;
     cursor: pointer;
-    box-shadow:
-        0 3px 6px rgba(0, 0, 0, 0.4),
-        inset 0 -2px 5px rgba(0, 0, 0, 0.3);
-    transition: all 0.1s ease;
-}
-
-.d-pad button:active {
-    transform: translateY(2px);
-    box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.4),
-        inset 0 -1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .d-pad-up {
     top: 0;
-    left: 42.5px;
+    left: 40px;
     border-radius: 5px 5px 0 0;
 }
 
 .d-pad-right {
     right: 0;
-    top: 42.5px;
+    top: 40px;
     border-radius: 0 5px 5px 0;
 }
 
 .d-pad-down {
     bottom: 0;
-    left: 42.5px;
+    left: 40px;
     border-radius: 0 0 5px 5px;
 }
 
 .d-pad-left {
     left: 0;
-    top: 42.5px;
+    top: 40px;
     border-radius: 5px 0 0 5px;
-}
-
-
-
-.d-pad-center {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    background: #222;
-    top: 47.5px;
-    left: 47.5px;
-    border-radius: 50%;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .action-buttons {
@@ -226,38 +170,42 @@
 }
 
 .action-btn {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(145deg, #ff0000, #cc0000);
+    width: 60px;
+    height: 60px;
     border: none;
     border-radius: 50%;
     cursor: pointer;
     box-shadow:
-        0 4px 8px rgba(0, 0, 0, 0.3),
-        inset 0 -2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
+        0 4px 0 rgba(0, 0, 0, 0.2),
+        inset 0 4px 4px rgba(255, 255, 255, 0.2);
+    transition: all 0.1s;
 }
 
 .action-btn:active {
-    transform: scale(0.95) translateY(2px);
+    transform: translateY(4px);
     box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.3),
-        inset 0 -1px 3px rgba(0, 0, 0, 0.2);
+        0 0 0 rgba(0, 0, 0, 0.2),
+        inset 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Animaciones */
-@keyframes glow {
-
-    0%,
-    100% {
-        box-shadow: 0 0 5px #7ec0ee, 0 0 10px #7ec0ee, 0 0 15px #7ec0ee;
-    }
-
-    50% {
-        box-shadow: 0 0 10px #7ec0ee, 0 0 20px #7ec0ee, 0 0 30px #7ec0ee;
-    }
+.btn-blue {
+    background: var(--button-blue);
 }
 
+.btn-green {
+    background: var(--button-green);
+}
+
+/* Stats screen */
+.stats-screen {
+    background: #e0e0e0;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
 @keyframes blink {
 
     0%,
@@ -270,31 +218,134 @@
     }
 }
 
-/* Estilos responsivos */
-@media (max-width: 950px) {
+.blinking {
+    animation: blink 1s infinite;
+}
+
+/* Responsive design */
+@media (max-width: 850px) {
     .pokedex-outer {
         width: 95%;
         height: auto;
-        transform: none;
     }
 
-    .top-lights {
+    .controls-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Añadir al archivo src/app/Components/pokedex-view/pokedex-view.component.css */
+
+/* Mejoras en la pantalla principal */
+.screen-container {
+    position: relative;
+    border: 5px solid var(--border-color);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.screen-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0) 50%);
+    pointer-events: none;
+}
+
+/* Mejoras en los botones */
+.d-pad button,
+.action-btn {
+    transition: all 0.1s ease;
+}
+
+.d-pad button:active,
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+.d-pad button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.d-pad-up::after {
+    border-width: 0 8px 12px 8px;
+    border-color: transparent transparent #fff transparent;
+}
+
+.d-pad-right::after {
+    border-width: 8px 0 8px 12px;
+    border-color: transparent transparent transparent #fff;
+}
+
+.d-pad-down::after {
+    border-width: 12px 8px 0 8px;
+    border-color: #fff transparent transparent transparent;
+}
+
+.d-pad-left::after {
+    border-width: 8px 12px 8px 0;
+    border-color: transparent #fff transparent transparent;
+}
+
+/* Efectos de luz */
+.big-light::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 20%;
+    height: 20%;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+/* Mejoras en la pantalla de estadísticas */
+.stats-screen {
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+/* Animación de encendido */
+@keyframes powerOn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.pokedex-outer {
+    animation: powerOn 0.5s ease-out;
+}
+
+/* Mejoras responsivas */
+@media (max-width: 850px) {
+    .pokedex-outer {
         padding: 10px;
     }
 
-    .big-light {
-        width: 50px;
-        height: 50px;
-    }
-
-    .small-light {
-        width: 20px;
-        height: 20px;
-    }
-
-    .bottom-controls {
-        flex-direction: column;
-        gap: 20px;
+    .screen-container {
+        height: 250px;
     }
 
     .d-pad {
@@ -302,98 +353,13 @@
         height: 100px;
     }
 
-    .action-buttons {
-        justify-content: center;
-        width: 100%;
-    }
-}
-
-/* Estilos adicionales para mejorar la apariencia */
-.stats-screen-section {
-    background: #f0f0f0;
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 15px;
-    box-shadow:
-        inset 0 0 15px rgba(0, 0, 0, 0.2),
-        0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 3px solid #b30000;
-}
-
-.screen-border {
-    border: 5px solid #333;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Efecto de escaneo en la pantalla */
-.screen-container::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    right: -50%;
-    bottom: -50%;
-    background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.2) 50%,
-            rgba(255, 255, 255, 0) 100%);
-    animation: scan 4s linear infinite;
-}
-
-@keyframes scan {
-    0% {
-        transform: translateY(-50%);
+    .d-pad button {
+        width: 30px;
+        height: 30px;
     }
 
-    100% {
-        transform: translateY(50%);
+    .action-btn {
+        width: 50px;
+        height: 50px;
     }
-}
-
-/* Mejoras en los botones de acción */
-.action-btn::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-    border-radius: 50%;
-    opacity: 0.6;
-}
-
-/* Efecto de presión en los botones del D-pad */
-.d-pad button:active::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: inherit;
-}
-
-/* Mejora en la apariencia de los componentes internos */
-app-pokedex,
-app-grafico {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-/* Efecto de brillo en los bordes de la Pokédex */
-.pokedex-outer::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    border-radius: 22px;
-    z-index: -1;
 }

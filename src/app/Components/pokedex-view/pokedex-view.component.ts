@@ -15,51 +15,28 @@ import { CommonModule } from '@angular/common';
 })
 export class PokedexViewComponent implements OnInit {
   currentPokemon: PokemonModel;
-  pokemonId: number = 1;
-  isLoading: boolean = false;
-  isSoundOn: boolean = true;
   isAnimating: boolean = false;
+  isSoundOn: boolean = true;
   errorMessage: string = '';
-
-  private audio: HTMLAudioElement;
-  private maxPokemonId: number = 898; // Número total de Pokémon en la National Dex
 
   constructor() {
     this.currentPokemon = new PokemonModel(1, "Bulbasaur", "", 45, 49, 49, 45, ["Grass", "Poison"], 0.7, 6.9);
-    this.audio = new Audio();
-    this.loadSoundEffects();
   }
 
   ngOnInit() {
-    this.loadSavedState();
-    this.fetchPokemonData();
+    this.fetchPokemonData(1);
   }
 
-  private loadSoundEffects() {
-    this.audio.src = 'assets/sounds/button-press.mp3';
-    this.audio.load();
-  }
-
-  private playSound() {
-    if (this.isSoundOn) {
-      this.audio.currentTime = 0;
-      this.audio.play().catch(error => console.log('Error playing sound:', error));
+  handlePokemon(direction: number) {
+    const newId = this.currentPokemon.getId() + direction;
+    if (newId > 0 && newId <= 898) {
+      this.fetchPokemonData(newId);
     }
   }
 
-  handlePokemon(evento: number): void {
-    this.playSound();
-    this.pokemonId += evento;
-    if (this.pokemonId < 1) this.pokemonId = 1;
-    if (this.pokemonId > this.maxPokemonId) this.pokemonId = this.maxPokemonId;
-    this.fetchPokemonData();
-  }
-
-  private async fetchPokemonData() {
-    this.isLoading = true;
-    this.errorMessage = '';
+  async fetchPokemonData(id: number) {
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.pokemonId}`);
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
       if (!response.ok) {
         throw new Error('Pokémon no encontrado');
       }
@@ -68,12 +45,10 @@ export class PokedexViewComponent implements OnInit {
     } catch (error) {
       this.errorMessage = 'Error al cargar el Pokémon. Intente de nuevo.';
       console.error('Error fetching Pokémon:', error);
-    } finally {
-      this.isLoading = false;
     }
   }
 
-  private updateCurrentPokemon(data: any) {
+  updateCurrentPokemon(data: any) {
     this.currentPokemon = new PokemonModel(
       data.id,
       data.name,
@@ -83,55 +58,56 @@ export class PokedexViewComponent implements OnInit {
       data.stats.find((stat: any) => stat.stat.name === 'defense').base_stat,
       data.stats.find((stat: any) => stat.stat.name === 'speed').base_stat,
       data.types.map((type: any) => type.type.name),
-      data.height / 10, // Convertir de decímetros a metros
-      data.weight / 10  // Convertir de hectogramos a kilogramos
+      data.height / 10,
+      data.weight / 10
     );
-  }
-
-  @HostListener('window:keyup', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowRight':
-        this.handlePokemon(1);
-        break;
-      case 'ArrowLeft':
-        this.handlePokemon(-1);
-        break;
-      case 'ArrowUp':
-        this.toggleSound();
-        break;
-      case 'ArrowDown':
-        this.toggleAnimation();
-        break;
-    }
-  }
-
-  toggleSound() {
-    this.isSoundOn = !this.isSoundOn;
-    this.playSound();
   }
 
   toggleAnimation() {
     this.isAnimating = !this.isAnimating;
   }
 
-  private saveState() {
-    localStorage.setItem('pokedexState', JSON.stringify({
-      pokemonId: this.pokemonId,
-      isSoundOn: this.isSoundOn
-    }));
-  }
+  // Continuación de src/app/Components/pokedex-view/pokedex-view.component.ts
 
-  private loadSavedState() {
-    const savedState = localStorage.getItem('pokedexState');
-    if (savedState) {
-      const state = JSON.parse(savedState);
-      this.pokemonId = state.pokemonId || 1;
-      this.isSoundOn = state.isSoundOn !== undefined ? state.isSoundOn : true;
+  toggleSound() {
+    this.isSoundOn = !this.isSoundOn;
+    // Implementar lógica de sonido
+    if (this.isSoundOn) {
+      // Reproducir sonido de encendido
+      this.playSound('assets/sounds/pokedex-on.mp3');
+    } else {
+      // Reproducir sonido de apagado
+      this.playSound('assets/sounds/pokedex-off.mp3');
     }
   }
 
-  ngOnDestroy() {
-    this.saveState();
+  playSound(soundPath: string) {
+    const audio = new Audio(soundPath);
+    audio.play().catch(error => console.error('Error playing sound:', error));
+  }
+
+  // Método para manejar errores de carga de imagen
+  handleImageError() {
+    this.errorMessage = 'Error al cargar la imagen del Pokémon.';
+    // Establecer una imagen por defecto
+    this.currentPokemon.setImagen('assets/images/pokemon-silhouette.png');
+  }
+
+  // Método para limpiar el mensaje de error
+  clearError() {
+    this.errorMessage = '';
+  }
+
+  // Método para obtener el color de fondo basado en el tipo de Pokémon
+  getPokemonTypeColor(): string {
+    const typeColors: { [key: string]: string } = {
+      normal: '#A8A878', fire: '#F08030', water: '#6890F0',
+      electric: '#F8D030', grass: '#78C850', ice: '#98D8D8',
+      fighting: '#C03028', poison: '#A040A0', ground: '#E0C068',
+      flying: '#A890F0', psychic: '#F85888', bug: '#A8B820',
+      rock: '#B8A038', ghost: '#705898', dragon: '#7038F8',
+      dark: '#705848', steel: '#B8B8D0', fairy: '#EE99AC'
+    };
+    return typeColors[this.currentPokemon.getTipo()[0].toLowerCase()] || '#A8A878';
   }
 }
