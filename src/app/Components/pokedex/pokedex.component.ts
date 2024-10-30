@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+// src/app/Components/pokedex/pokedex.component.ts
+
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PokemonModel } from '../../Models/iPokemon';
 
 @Component({
   selector: 'app-pokedex',
@@ -8,36 +11,34 @@ import { CommonModule } from '@angular/common';
   templateUrl: './pokedex.component.html',
   styleUrls: ['./pokedex.component.css']
 })
-export class PokedexComponent {
-  @Input() imageUrl: string = '';
-  @Output() pokemonId: EventEmitter<number> = new EventEmitter();
+export class PokedexComponent implements OnChanges {
+  @Input() pokemon!: PokemonModel;
+  @Input() isAnimating: boolean = false;
+  @Output() pokemonChange = new EventEmitter<number>();
 
   isLoading: boolean = false;
-  isAnimating: boolean = false;
+  imageError: boolean = false;
+
+  ngOnChanges() {
+    this.imageError = false;
+    this.isLoading = true;
+  }
 
   onImageLoad() {
     this.isLoading = false;
-    this.startAnimation();
+    this.imageError = false;
   }
 
-  startAnimation() {
-    this.isAnimating = true;
-    setTimeout(() => {
-      this.isAnimating = false;
-    }, 3000);
+  onImageError() {
+    this.isLoading = false;
+    this.imageError = true;
   }
 
   previousPokemon() {
-    if (!this.isLoading) {
-      this.isLoading = true;
-      this.pokemonId.emit(-1);
-    }
+    this.pokemonChange.emit(-1);
   }
 
   nextPokemon() {
-    if (!this.isLoading) {
-      this.isLoading = true;
-      this.pokemonId.emit(1);
-    }
+    this.pokemonChange.emit(1);
   }
 }

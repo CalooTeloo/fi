@@ -1,53 +1,24 @@
-<div class="stats-screen">
-    <div class="pokemon-info">
-        <h2 class="pokemon-name">{{nombrePokemon}}</h2>
-        <div class="pokemon-badges">
-            <span class="badge id-badge">{{idPokemon}}</span>
-            <span class="badge type-badge">{{tipoPokemon}}</span>
+<!-- src/app/Components/grafico/grafico.component.html -->
+<div class="stats-container">
+    <div class="pokemon-details">
+        <div class="detail-item">
+            <span class="detail-label">Altura:</span>
+            <span class="detail-value">{{pokemon.getAltura()}} m</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Peso:</span>
+            <span class="detail-value">{{pokemon.getPeso()}} kg</span>
         </div>
     </div>
 
     <div class="stats-grid">
-        <div class="stat-bar-container">
-            <label>HP</label>
-            <div class="stat-bar">
-                <div class="stat-fill hp" 
-                     [style.width.%]="vidaPoke"
-                     [class.critical]="vidaPoke < 20">
-                    <span class="stat-value">{{vidaPoke}}</span>
+        <div class="stat-bar" *ngFor="let stat of statsPercentages | keyvalue">
+            <label class="stat-label">{{stat.key | uppercase}}</label>
+            <div class="stat-track">
+                <div class="stat-fill" [style.width.%]="stat.value" [style.background-color]="getStatColor(stat.value)">
+                    <span class="stat-value">{{stat.value | number:'1.0-0'}}</span>
                 </div>
             </div>
-        </div>
-
-        <div class="stat-bar-container">
-            <label>DEFENSE</label>
-            <div class="stat-bar">
-                <div class="stat-fill defense" 
-                     [style.width.%]="protePoke">
-                    <span class="stat-value">{{protePoke}}</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="stat-bar-container">
-            <label>ATTACK</label>
-            <div class="stat-bar">
-                <div class="stat-fill attack" 
-                     [style.width.%]="ataPoke">
-                    <span class="stat-value">{{ataPoke}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="pokemon-characteristics">
-        <div class="characteristic">
-            <i class="fas fa-weight"></i>
-            <span>{{peso}} kg</span>
-        </div>
-        <div class="characteristic">
-            <i class="fas fa-ruler-vertical"></i>
-            <span>{{altura}} m</span>
         </div>
     </div>
 </div>

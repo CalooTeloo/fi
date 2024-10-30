@@ -1,22 +1,29 @@
+<!-- src/app/Components/pokedex-view/pokedex-view.component.html -->
+
 <div class="pokedex-container">
-    <div class="pokedex-outer">
+    <div class="pokedex-outer" [class.loading]="isLoading">
         <!-- Luces indicadoras superiores -->
         <div class="top-lights">
-            <div class="big-light">
+            <div class="big-light" [class.on]="!isLoading">
                 <div class="light-reflect"></div>
             </div>
             <div class="small-lights">
-                <div class="small-light red"></div>
-                <div class="small-light yellow"></div>
-                <div class="small-light green"></div>
+                <div class="small-light red" [class.on]="isSoundOn"></div>
+                <div class="small-light yellow" [class.on]="isAnimating"></div>
+                <div class="small-light green" [class.on]="!errorMessage"></div>
             </div>
         </div>
 
         <!-- Pantalla principal -->
         <div class="main-screen-section">
             <div class="screen-border">
-                <app-pokedex [imageUrl]="pokemonImagen" (pokemonId)="handlePokemon($event)">
+                <app-pokedex [pokemon]="currentPokemon" [isAnimating]="isAnimating"
+                    (pokemonChange)="handlePokemon($event)">
                 </app-pokedex>
+            </div>
+            <!-- Mensaje de error -->
+            <div class="error-message" *ngIf="errorMessage">
+                {{errorMessage}}
             </div>
         </div>
 
@@ -28,22 +35,77 @@
 
         <!-- Pantalla de estadísticas -->
         <div class="stats-screen-section">
-            <app-grafico></app-grafico>
+            <app-grafico [pokemon]="currentPokemon"></app-grafico>
         </div>
 
         <!-- Controles inferiores -->
         <div class="bottom-controls">
+            <!-- D-Pad -->
             <div class="d-pad">
-                <button class="d-pad-up"></button>
-                <button class="d-pad-right"></button>
-                <button class="d-pad-down"></button>
-                <button class="d-pad-left"></button>
+                <button class="d-pad-up" (click)="toggleSound()" [class.active]="isSoundOn">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button class="d-pad-right" (click)="handlePokemon(1)" [disabled]="isLoading">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="d-pad-down" (click)="toggleAnimation()" [class.active]="isAnimating">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="d-pad-left" (click)="handlePokemon(-1)" [disabled]="isLoading">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
                 <div class="d-pad-center"></div>
             </div>
+
+            <!-- Botones de acción -->
             <div class="action-buttons">
-                <button class="action-btn"></button>
-                <button class="action-btn"></button>
+                <button class="action-btn sound-btn" (click)="toggleSound()">
+                    <i [class]="isSoundOn ? 'fas fa-volume-up' : 'fas fa-volume-mute'"></i>
+                </button>
+                <button class="action-btn animate-btn" (click)="toggleAnimation()">
+                    <i [class]="isAnimating ? 'fas fa-pause' : 'fas fa-play'"></i>
+                </button>
             </div>
+
+            <!-- Información adicional -->
+            <div class="info-panel">
+                <div class="pokemon-id">
+                    #{{currentPokemon.getId().toString().padStart(3, '0')}}
+                </div>
+                <div class="controls-help">
+                    <p>← → para navegar</p>
+                    <p>↑ para sonido</p>
+                    <p>↓ para animación</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de estado -->
+        <div class="status-bar">
+            <div class="status-indicator" [class.online]="!isLoading">
+                <span class="status-dot"></span>
+                {{isLoading ? 'Cargando...' : 'Listo'}}
+            </div>
+            <div class="version-number">
+                v1.0.0
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay de carga -->
+    <div class="loading-overlay" *ngIf="isLoading">
+        <div class="pokeball-spinner">
+            <div class="pokeball-inner"></div>
+        </div>
+        <p class="loading-text">Cargando Pokémon...</p>
+    </div>
+
+    <!-- Modal de error -->
+    <div class="error-modal" *ngIf="errorMessage" (click)="errorMessage = ''">
+        <div class="error-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>{{errorMessage}}</p>
+            <button class="close-btn">Cerrar</button>
         </div>
     </div>
 </div>
