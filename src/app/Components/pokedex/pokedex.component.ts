@@ -1,5 +1,4 @@
-// pokedex.component.ts
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PokemonModel } from '../../Models/iPokemon';
 
@@ -13,39 +12,23 @@ import { PokemonModel } from '../../Models/iPokemon';
 export class PokedexComponent implements OnChanges {
   @Input() pokemon!: PokemonModel;
   @Input() isAnimating: boolean = false;
-  @Output() pokemonChange = new EventEmitter<number>();
+  @Input() currentSpriteUrl: string = '';
+  @Output() imageError = new EventEmitter<string>();
 
   isLoading: boolean = false;
-  imageError: boolean = false;
-  spriteUrl: string = '';
 
-  ngOnChanges() {
-    this.imageError = false;
-    this.isLoading = true;
-    this.updateSpriteUrl();
-  }
-
-  updateSpriteUrl() {
-    // Asumiendo que tienes acceso a sprites retro. Si no, usa la imagen normal.
-    this.spriteUrl = `assets/sprites/${this.pokemon.getId().toString().padStart(3, '0')}.png`;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentSpriteUrl']) {
+      this.isLoading = true;
+    }
   }
 
   onImageLoad() {
     this.isLoading = false;
-    this.imageError = false;
   }
 
   onImageError() {
     this.isLoading = false;
-    this.imageError = true;
-    this.spriteUrl = 'assets/sprites/missingno.png'; // Sprite para Pokémon no encontrado
-  }
-
-  previousPokemon() {
-    this.pokemonChange.emit(-1);
-  }
-
-  nextPokemon() {
-    this.pokemonChange.emit(1);
+    this.imageError.emit(this.currentSpriteUrl);
   }
 }

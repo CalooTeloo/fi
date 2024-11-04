@@ -1,13 +1,9 @@
-<!-- pokedex.component.html -->
 <div class="pokemon-display">
     <div class="sprite-container" [class.animating]="isAnimating">
-        <img *ngIf="!imageError" [src]="spriteUrl" [alt]="pokemon.getNombre()" (load)="onImageLoad()"
+        <img *ngIf="currentSpriteUrl" [src]="currentSpriteUrl" [alt]="pokemon.getNombre()" (load)="onImageLoad()"
             (error)="onImageError()" class="pokemon-sprite" />
         <div *ngIf="isLoading" class="loading-overlay">
             <div class="loading-text">LOADING...</div>
-        </div>
-        <div *ngIf="imageError" class="error-message">
-            <div class="error-text">? ? ?</div>
         </div>
     </div>
 

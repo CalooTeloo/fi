@@ -1,5 +1,3 @@
-// src/app/Components/pokedex-view/pokedex-view.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { PokedexComponent } from '../pokedex/pokedex.component';
 import { GraficoComponent } from '../grafico/grafico.component';
@@ -17,9 +15,11 @@ export class PokedexViewComponent implements OnInit {
   currentPokemon: PokemonModel;
   isAnimating: boolean = false;
   errorMessage: string = '';
+  currentSpriteIndex: number = 0;
+  spriteKeys: string[] = ['default', 'shiny', 'backDefault', 'backShiny', 'officialArtwork', 'dreamWorld', 'homeDefault', 'homeShiny'];
 
   constructor() {
-    this.currentPokemon = new PokemonModel(1, "Bulbasaur", "", 45, 49, 49, 45, ["Grass", "Poison"], 0.7, 6.9);
+    this.currentPokemon = new PokemonModel(1, "Bulbasaur", {}, 45, 49, 49, 45, ["Grass", "Poison"], 0.7, 6.9);
   }
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class PokedexViewComponent implements OnInit {
 
   handlePokemon(direction: number) {
     const newId = this.currentPokemon.getId() + direction;
-    if (newId > 0 && newId <= 151) { // Limitamos a la primera generación
+    if (newId > 0 && newId <= 898) { // Limitamos a los Pokémon disponibles en la API
       this.fetchPokemonData(newId);
     }
   }
@@ -49,10 +49,22 @@ export class PokedexViewComponent implements OnInit {
   }
 
   updateCurrentPokemon(data: any) {
+    const baseUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+    const images = {
+      default: `${baseUrl}${data.id}.png`,
+      shiny: `${baseUrl}shiny/${data.id}.png`,
+      backDefault: `${baseUrl}back/${data.id}.png`,
+      backShiny: `${baseUrl}back/shiny/${data.id}.png`,
+      officialArtwork: `${baseUrl}other/official-artwork/${data.id}.png`,
+      dreamWorld: `${baseUrl}other/dream-world/${data.id}.svg`,
+      homeDefault: `${baseUrl}other/home/${data.id}.png`,
+      homeShiny: `${baseUrl}other/home/shiny/${data.id}.png`
+    };
+
     this.currentPokemon = new PokemonModel(
       data.id,
       data.name,
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
+      images,
       data.stats.find((stat: any) => stat.stat.name === 'hp').base_stat,
       data.stats.find((stat: any) => stat.stat.name === 'attack').base_stat,
       data.stats.find((stat: any) => stat.stat.name === 'defense').base_stat,
@@ -67,9 +79,9 @@ export class PokedexViewComponent implements OnInit {
     this.isAnimating = !this.isAnimating;
   }
 
-  handleImageError() {
-    this.errorMessage = 'Error al cargar la imagen del Pokémon.';
-    this.currentPokemon.setImagen('assets/images/missingno.png');
+  handleImageError(spriteKey: string) {
+    console.warn(`Error loading image for sprite: ${spriteKey}`);
+    // Puedes implementar una lógica para manejar errores de carga de imágenes específicas
   }
 
   clearError() {
@@ -86,5 +98,18 @@ export class PokedexViewComponent implements OnInit {
       dark: '#705848', steel: '#B8B8D0', fairy: '#EE99AC'
     };
     return typeColors[type.toLowerCase()] || '#A8A878';
+  }
+
+  changeSprite(direction: number) {
+    this.currentSpriteIndex = (this.currentSpriteIndex + direction + this.spriteKeys.length) % this.spriteKeys.length;
+  }
+
+  getCurrentSpriteKey(): string {
+    return this.spriteKeys[this.currentSpriteIndex];
+  }
+
+  getCurrentSpriteUrl(): string {
+    const currentKey = this.getCurrentSpriteKey();
+    return this.currentPokemon.getImagen()[currentKey] || '';
   }
 }

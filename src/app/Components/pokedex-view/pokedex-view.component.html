@@ -12,7 +12,8 @@
         <div class="main-screen">
             <div class="screen-container">
                 <div class="screen-overlay"></div>
-                <app-pokedex [pokemon]="currentPokemon" [isAnimating]="isAnimating" (imageError)="handleImageError()">
+                <app-pokedex [pokemon]="currentPokemon" [isAnimating]="isAnimating"
+                    [currentSpriteUrl]="getCurrentSpriteUrl()" (imageError)="handleImageError($event)">
                 </app-pokedex>
             </div>
 
@@ -25,9 +26,9 @@
         <div class="controls-section">
             <div class="d-pad">
                 <button class="d-pad-up" (click)="handlePokemon(1)"></button>
-                <button class="d-pad-right" (click)="handlePokemon(1)"></button>
+                <button class="d-pad-right" (click)="changeSprite(1)"></button>
                 <button class="d-pad-down" (click)="handlePokemon(-1)"></button>
-                <button class="d-pad-left" (click)="handlePokemon(-1)"></button>
+                <button class="d-pad-left" (click)="changeSprite(-1)"></button>
             </div>
             <div class="action-buttons">
                 <button class="action-btn btn-green" (click)="toggleAnimation()">
@@ -35,6 +36,7 @@
                 </button>
             </div>
         </div>
+
         <div class="info-panel">
             <div class="pokemon-id">#{{ currentPokemon.getId().toString().padStart(3, '0') }}</div>
             <div class="pokemon-name">{{ currentPokemon.getNombre() | titlecase }}</div>

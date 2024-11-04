@@ -11,24 +11,17 @@
     --text-color: #FFFFFF;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    image-rendering: pixelated;
-}
-
 body {
-    font-family: 'Press Start 2P', cursive;
     background: repeating-linear-gradient(45deg,
             #222 0px,
-            #222 2px,
-            #333 2px,
-            #333 4px);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+            #222 10px,
+            #333 10px,
+            #333 20px);
+    font-family: 'Press Start 2P', cursive;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 /* Utilidad para bordes pixelados */
