@@ -1,21 +1,22 @@
 <!-- src/app/Components/grafico/grafico.component.html -->
-<div class="stats-container">
+<div class="stats-container pixel-art">
     <div class="pokemon-details">
-        <div class="detail-item">
-            <span class="detail-label">Altura:</span>
-            <span class="detail-value">{{pokemon.getAltura()}} m</span>
+        <div class="detail-row">
+            <span class="detail-label">HT</span>
+            <span class="detail-value">{{pokemon.getAltura()}}m</span>
         </div>
-        <div class="detail-item">
-            <span class="detail-label">Peso:</span>
-            <span class="detail-value">{{pokemon.getPeso()}} kg</span>
+        <div class="detail-row">
+            <span class="detail-label">WT</span>
+            <span class="detail-value">{{pokemon.getPeso()}}kg</span>
         </div>
     </div>
 
     <div class="stats-grid">
         <div class="stat-bar" *ngFor="let stat of statsPercentages | keyvalue">
-            <label class="stat-label">{{stat.key | uppercase}}</label>
+            <label class="stat-label">{{stat.key}}</label>
             <div class="stat-track">
-                <div class="stat-fill" [style.width.%]="stat.value" [style.background-color]="getStatColor(stat.value)">
+                <div class="stat-fill pixel-fill" [style.width.%]="stat.value"
+                    [style.background-color]="getStatColor(stat.value)">
                     <span class="stat-value">{{stat.value | number:'1.0-0'}}</span>
                 </div>
             </div>

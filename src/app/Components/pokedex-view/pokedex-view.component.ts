@@ -27,23 +27,47 @@ export class PokedexViewComponent implements OnInit {
     this.fetchPokemonData(1);
   }
 
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowLeft':
+        this.handlePokemon(-1);
+        break;
+      case 'ArrowRight':
+        this.handlePokemon(1);
+        break;
+      case 'ArrowUp':
+        this.handlePokemon(10);
+        break;
+      case 'ArrowDown':
+        this.handlePokemon(-10);
+        break;
+    }
+  }
+
   handlePokemon(direction: number) {
     const newId = this.currentPokemon.getId() + direction;
     if (newId > 0 && newId <= 898) {
       this.fetchPokemonData(newId);
+      this.playSound('assets/sounds/button-press.mp3');
     }
   }
 
+  // Continuación de pokedex-view.component.ts
+
   async fetchPokemonData(id: number) {
     try {
+      this.errorMessage = '';
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
       if (!response.ok) {
         throw new Error('Pokémon no encontrado');
       }
       const data = await response.json();
       this.updateCurrentPokemon(data);
+      this.playSound('assets/sounds/pokemon-found.mp3');
     } catch (error) {
-      this.errorMessage = 'Error al cargar el Pokémon. Intente de nuevo.';
+      this.errorMessage = 'ERROR! POKEMON NO ENCONTRADO';
+      this.playSound('assets/sounds/error.mp3');
       console.error('Error fetching Pokémon:', error);
     }
   }
@@ -52,7 +76,7 @@ export class PokedexViewComponent implements OnInit {
     this.currentPokemon = new PokemonModel(
       data.id,
       data.name,
-      data.sprites.front_default,
+      this.processSprite(data.sprites.front_default),
       data.stats.find((stat: any) => stat.stat.name === 'hp').base_stat,
       data.stats.find((stat: any) => stat.stat.name === 'attack').base_stat,
       data.stats.find((stat: any) => stat.stat.name === 'defense').base_stat,
@@ -63,50 +87,66 @@ export class PokedexViewComponent implements OnInit {
     );
   }
 
-  toggleAnimation() {
-    this.isAnimating = !this.isAnimating;
+  // Método para procesar sprites y hacerlos más pixelados
+  processSprite(spriteUrl: string): string {
+    // Aquí podrías implementar lógica para procesar la imagen
+    // Por ahora solo retornamos la URL original
+    return spriteUrl;
   }
 
-  // Continuación de src/app/Components/pokedex-view/pokedex-view.component.ts
+  toggleAnimation() {
+    this.isAnimating = !this.isAnimating;
+    this.playSound(this.isAnimating ?
+      'assets/sounds/animation-on.mp3' :
+      'assets/sounds/animation-off.mp3');
+  }
 
   toggleSound() {
     this.isSoundOn = !this.isSoundOn;
-    // Implementar lógica de sonido
     if (this.isSoundOn) {
-      // Reproducir sonido de encendido
-      this.playSound('assets/sounds/pokedex-on.mp3');
-    } else {
-      // Reproducir sonido de apagado
-      this.playSound('assets/sounds/pokedex-off.mp3');
+      this.playSound('assets/sounds/sound-on.mp3');
     }
   }
 
   playSound(soundPath: string) {
-    const audio = new Audio(soundPath);
-    audio.play().catch(error => console.error('Error playing sound:', error));
+    if (this.isSoundOn) {
+      const audio = new Audio(soundPath);
+      audio.volume = 0.3; // Volumen moderado
+      audio.play().catch(error => console.error('Error playing sound:', error));
+    }
   }
 
-  // Método para manejar errores de carga de imagen
   handleImageError() {
-    this.errorMessage = 'Error al cargar la imagen del Pokémon.';
-    // Establecer una imagen por defecto
-    this.currentPokemon.setImagen('assets/images/pokemon-silhouette.png');
+    this.errorMessage = 'ERROR! IMAGEN NO DISPONIBLE';
+    this.playSound('assets/sounds/error.mp3');
+    this.currentPokemon.setImagen('assets/images/missing-pokemon.png');
   }
 
-  // Método para limpiar el mensaje de error
   clearError() {
     this.errorMessage = '';
+    this.playSound('assets/sounds/clear.mp3');
   }
 
-  // Método para obtener el color de fondo basado en el tipo de Pokémon
   getPokemonTypeColor(): string {
     const typeColors: { [key: string]: string } = {
-      normal: '#A8A878', fire: '#F08030', water: '#6890F0',
-      electric: '#F8D030', grass: '#78C850', ice: '#98D8D8',
-      fighting: '#C03028', poison: '#A040A0', ground: '#E0C068',
-      flying: '#A890F0', psychic: '#F85888', bug: '#A8B820',
-      rock: '#B8A038', ghost: '#705898', dragon: '#7038F8',
-      dark: '#705848', steel: '#B8B8D0', fairy: '#EE99AC'
+      normal: '#A8A878',
+      fire: '#F08030',
+      water: '#6890F0',
+      electric: '#F8D030',
+      grass: '#78C850',
+      ice: '#98D8D8',
+      fighting: '#C03028',
+      poison: '#A040A0',
+      ground: '#E0C068',
+      flying: '#A890F0',
+      psychic: '#F85888',
+      bug: '#A8B820',
+      rock: '#B8A038',
+      ghost: '#705898',
+      dragon: '#7038F8',
+      dark: '#705848',
+      steel: '#B8B8D0',
+      fairy: '#EE99AC'
     };
     return typeColors[this.currentPokemon.getTipo()[0].toLowerCase()] || '#A8A878';
   }

@@ -10,9 +10,9 @@
     --button-yellow: #FFD700;
 }
 
-body {
-    background: #f0f0f0;
-    font-family: 'Arial', sans-serif;
+.pixel-art {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
 .pokedex-container {
@@ -20,51 +20,42 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background: #f0f0f0 url('path/to/pixel-background.png') repeat;
     padding: 20px;
 }
 
 .pokedex-outer {
-    width: 800px;
-    height: 600px;
+    width: 320px;
+    height: 480px;
     background: var(--pokedex-red);
-    border-radius: 20px;
+    border: 8px solid var(--border-color);
+    border-radius: 16px;
     position: relative;
     overflow: hidden;
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.3),
-        inset 0 0 10px rgba(0, 0, 0, 0.2);
+        inset -4px -4px 0 0 var(--pokedex-dark-red),
+        inset 4px 4px 0 0 #FFFFFF;
     padding: 20px;
 }
 
-/* Top section */
-.top-section {
+/* LED Lights */
+.led-lights {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-around;
+    margin-bottom: 10px;
 }
 
-.big-light {
-    width: 70px;
-    height: 70px;
-    background: radial-gradient(circle at 30% 30%, #7ec0ee, #4a90e2);
+.led {
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    border: 5px solid white;
-    box-shadow:
-        0 0 10px #4a90e2,
-        inset 0 0 5px rgba(0, 0, 0, 0.5);
+    border: 2px solid #000;
 }
 
-.small-lights {
-    display: flex;
-    gap: 10px;
-}
-
-.small-light {
+.big-led {
     width: 20px;
     height: 20px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: radial-gradient(circle at 30% 30%, #7ec0ee, #4a90e2);
 }
 
 .red {
@@ -79,133 +70,181 @@ body {
     background: radial-gradient(circle at 30% 30%, #48dbfb, #0abde3);
 }
 
-/* Main screen */
+/* Main Screen */
 .main-screen {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
+    background: var(--screen-bg);
+    border: 4px solid var(--border-color);
+    border-radius: 8px;
+    height: 200px;
     margin-bottom: 20px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
 }
 
-.screen-container {
-    background: var(--screen-bg);
-    height: 300px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+.screen-border {
+    border: 4px solid #000;
+    height: 100%;
+    padding: 8px;
+}
+
+.screen-inner {
+    background: #FFFFFF;
+    height: 100%;
     overflow: hidden;
 }
 
-.screen-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        linear-gradient(to bottom,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(255, 255, 255, 0.1) 2%,
-            transparent 2%,
-            transparent 98%,
-            rgba(255, 255, 255, 0.1) 98%,
-            rgba(255, 255, 255, 0.1) 100%);
-    pointer-events: none;
-}
-
-/* Controls section */
+/* Controls */
 .controls-section {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin-top: 20px;
 }
 
 .d-pad {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     position: relative;
     background: var(--border-color);
     border-radius: 50%;
 }
 
-.d-pad button {
+.d-pad-button {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background: #444;
     border: none;
     cursor: pointer;
 }
 
-.d-pad-up {
+.d-pad-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.d-pad-button.up {
     top: 0;
-    left: 40px;
-    border-radius: 5px 5px 0 0;
+    left: 35px;
 }
 
-.d-pad-right {
+.d-pad-button.right {
     right: 0;
-    top: 40px;
-    border-radius: 0 5px 5px 0;
+    top: 35px;
 }
 
-.d-pad-down {
+.d-pad-button.down {
     bottom: 0;
-    left: 40px;
-    border-radius: 0 0 5px 5px;
+    left: 35px;
 }
 
-.d-pad-left {
+.d-pad-button.left {
     left: 0;
-    top: 40px;
-    border-radius: 5px 0 0 5px;
+    top: 35px;
 }
 
+/* Flechas del D-pad */
+.d-pad-button.up::after {
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent #fff transparent;
+}
+
+.d-pad-button.right::after {
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent transparent #fff;
+}
+
+.d-pad-button.down::after {
+    border-width: 8px 8px 0 8px;
+    border-color: #fff transparent transparent transparent;
+}
+
+.d-pad-button.left::after {
+    border-width: 8px 8px 8px 0;
+    border-color: transparent #fff transparent transparent;
+}
+
+/* Botones de acción */
 .action-buttons {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
-.action-btn {
-    width: 60px;
-    height: 60px;
-    border: none;
+.action-button {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #000;
     border-radius: 50%;
     cursor: pointer;
-    box-shadow:
-        0 4px 0 rgba(0, 0, 0, 0.2),
-        inset 0 4px 4px rgba(255, 255, 255, 0.2);
-    transition: all 0.1s;
+    position: relative;
+    transition: transform 0.1s;
 }
 
-.action-btn:active {
-    transform: translateY(4px);
-    box-shadow:
-        0 0 0 rgba(0, 0, 0, 0.2),
-        inset 0 4px 4px rgba(0, 0, 0, 0.2);
+.action-button::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
 }
 
-.btn-blue {
-    background: var(--button-blue);
+.action-button:active {
+    transform: scale(0.95);
 }
 
-.btn-green {
-    background: var(--button-green);
-}
-
-/* Stats screen */
-.stats-screen {
-    background: #e0e0e0;
-    border-radius: 15px;
-    padding: 15px;
+/* Panel de información */
+.info-panel {
+    background: #000;
+    border: 4px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
     margin-top: 20px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    color: var(--screen-bg);
+    font-family: 'Press Start 2P', monospace;
 }
 
-/* Animations */
+.pokemon-id {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.pokemon-name {
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.type-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 2px;
+    border: 2px solid #000;
+    background: var(--button-blue);
+    color: #fff;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+/* Efectos pixelados */
+.pixel-text {
+    font-family: 'Press Start 2P', monospace;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pixel-badge {
+    image-rendering: pixelated;
+    border-image: url('path/to/pixel-border.png') 2 stretch;
+}
+
+/* Animaciones */
 @keyframes blink {
 
     0%,
@@ -222,144 +261,17 @@ body {
     animation: blink 1s infinite;
 }
 
-/* Responsive design */
-@media (max-width: 850px) {
+/* Media Queries */
+@media (max-width: 480px) {
     .pokedex-outer {
-        width: 95%;
+        width: 100%;
         height: auto;
+        min-height: 480px;
     }
 
     .controls-section {
         flex-direction: column;
+        align-items: center;
         gap: 20px;
-    }
-}
-
-/* Añadir al archivo src/app/Components/pokedex-view/pokedex-view.component.css */
-
-/* Mejoras en la pantalla principal */
-.screen-container {
-    position: relative;
-    border: 5px solid var(--border-color);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.screen-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(255, 255, 255, 0) 50%);
-    pointer-events: none;
-}
-
-/* Mejoras en los botones */
-.d-pad button,
-.action-btn {
-    transition: all 0.1s ease;
-}
-
-.d-pad button:active,
-.action-btn:active {
-    transform: scale(0.95);
-}
-
-.d-pad button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-}
-
-.d-pad-up::after {
-    border-width: 0 8px 12px 8px;
-    border-color: transparent transparent #fff transparent;
-}
-
-.d-pad-right::after {
-    border-width: 8px 0 8px 12px;
-    border-color: transparent transparent transparent #fff;
-}
-
-.d-pad-down::after {
-    border-width: 12px 8px 0 8px;
-    border-color: #fff transparent transparent transparent;
-}
-
-.d-pad-left::after {
-    border-width: 8px 12px 8px 0;
-    border-color: transparent #fff transparent transparent;
-}
-
-/* Efectos de luz */
-.big-light::after {
-    content: '';
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    width: 20%;
-    height: 20%;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    filter: blur(2px);
-}
-
-/* Mejoras en la pantalla de estadísticas */
-.stats-screen {
-    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-}
-
-/* Animación de encendido */
-@keyframes powerOn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    50% {
-        opacity: 0.5;
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.pokedex-outer {
-    animation: powerOn 0.5s ease-out;
-}
-
-/* Mejoras responsivas */
-@media (max-width: 850px) {
-    .pokedex-outer {
-        padding: 10px;
-    }
-
-    .screen-container {
-        height: 250px;
-    }
-
-    .d-pad {
-        width: 100px;
-        height: 100px;
-    }
-
-    .d-pad button {
-        width: 30px;
-        height: 30px;
-    }
-
-    .action-btn {
-        width: 50px;
-        height: 50px;
     }
 }

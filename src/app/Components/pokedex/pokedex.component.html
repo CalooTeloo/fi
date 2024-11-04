@@ -1,34 +1,33 @@
 <!-- src/app/Components/pokedex/pokedex.component.html -->
-<div class="pokedex-screen">
-    <div class="screen-container" [class.animating]="isAnimating">
+<div class="pokedex-screen pixel-art">
+    <div class="screen-content">
         <div class="loading-overlay" *ngIf="isLoading">
             <div class="pokeball-loading"></div>
         </div>
 
-        <div class="error-message" *ngIf="imageError">
-            <i class="fas fa-exclamation-triangle"></i>
-            <p>Pokémon no encontrado</p>
+        <div class="error-message pixel-text" *ngIf="imageError">
+            <i class="pixel-icon error"></i>
+            <p>?????</p>
         </div>
 
         <img *ngIf="!imageError" [src]="pokemon.getImagen()" [alt]="pokemon.getNombre()" (load)="onImageLoad()"
             (error)="onImageError()" class="pokemon-sprite" [class.bounce]="isAnimating" />
 
-        <div class="pokemon-info">
-            <h2 class="pokemon-name">{{pokemon.getNombre() | titlecase}}</h2>
+        <div class="pokemon-info pixel-text">
+            <h2 class="pokemon-name">{{pokemon.getNombre() | uppercase}}</h2>
             <div class="pokemon-types">
-                <span *ngFor="let tipo of pokemon.getTipo()" class="type-badge"
-                    [style.background-color]="pokemon.getColorTipo()">
-                    {{tipo | titlecase}}
+                <span *ngFor="let tipo of pokemon.getTipo()" class="type-badge pixel-badge">
+                    {{tipo | uppercase}}
                 </span>
             </div>
         </div>
     </div>
 
     <div class="control-buttons">
-        <button (click)="previousPokemon()" [disabled]="isLoading" class="nav-button prev">
+        <button (click)="previousPokemon()" [disabled]="isLoading" class="nav-button prev pixel-button">
             ◀
         </button>
-        <button (click)="nextPokemon()" [disabled]="isLoading" class="nav-button next">
+        <button (click)="nextPokemon()" [disabled]="isLoading" class="nav-button next pixel-button">
             ▶
         </button>
     </div>
