@@ -1,5 +1,4 @@
-// src/app/Components/pokedex/pokedex.component.ts
-
+// pokedex.component.ts
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PokemonModel } from '../../Models/iPokemon';
@@ -18,10 +17,17 @@ export class PokedexComponent implements OnChanges {
 
   isLoading: boolean = false;
   imageError: boolean = false;
+  spriteUrl: string = '';
 
   ngOnChanges() {
     this.imageError = false;
     this.isLoading = true;
+    this.updateSpriteUrl();
+  }
+
+  updateSpriteUrl() {
+    // Asumiendo que tienes acceso a sprites retro. Si no, usa la imagen normal.
+    this.spriteUrl = `assets/sprites/${this.pokemon.getId().toString().padStart(3, '0')}.png`;
   }
 
   onImageLoad() {
@@ -32,6 +38,7 @@ export class PokedexComponent implements OnChanges {
   onImageError() {
     this.isLoading = false;
     this.imageError = true;
+    this.spriteUrl = 'assets/sprites/missingno.png'; // Sprite para Pokémon no encontrado
   }
 
   previousPokemon() {

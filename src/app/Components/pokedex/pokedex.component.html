@@ -1,34 +1,24 @@
-<!-- src/app/Components/pokedex/pokedex.component.html -->
-<div class="pokedex-screen pixel-art">
-    <div class="screen-content">
-        <div class="loading-overlay" *ngIf="isLoading">
-            <div class="pokeball-loading"></div>
+<!-- pokedex.component.html -->
+<div class="pokemon-display">
+    <div class="sprite-container" [class.animating]="isAnimating">
+        <img *ngIf="!imageError" [src]="spriteUrl" [alt]="pokemon.getNombre()" (load)="onImageLoad()"
+            (error)="onImageError()" class="pokemon-sprite" />
+        <div *ngIf="isLoading" class="loading-overlay">
+            <div class="loading-text">LOADING...</div>
         </div>
-
-        <div class="error-message pixel-text" *ngIf="imageError">
-            <i class="pixel-icon error"></i>
-            <p>?????</p>
-        </div>
-
-        <img *ngIf="!imageError" [src]="pokemon.getImagen()" [alt]="pokemon.getNombre()" (load)="onImageLoad()"
-            (error)="onImageError()" class="pokemon-sprite" [class.bounce]="isAnimating" />
-
-        <div class="pokemon-info pixel-text">
-            <h2 class="pokemon-name">{{pokemon.getNombre() | uppercase}}</h2>
-            <div class="pokemon-types">
-                <span *ngFor="let tipo of pokemon.getTipo()" class="type-badge pixel-badge">
-                    {{tipo | uppercase}}
-                </span>
-            </div>
+        <div *ngIf="imageError" class="error-message">
+            <div class="error-text">? ? ?</div>
         </div>
     </div>
 
-    <div class="control-buttons">
-        <button (click)="previousPokemon()" [disabled]="isLoading" class="nav-button prev pixel-button">
-            ◀
-        </button>
-        <button (click)="nextPokemon()" [disabled]="isLoading" class="nav-button next pixel-button">
-            ▶
-        </button>
+    <div class="pokemon-data">
+        <div class="data-row">
+            <span class="label">HEIGHT:</span>
+            <span class="value">{{pokemon.getAltura()}} M</span>
+        </div>
+        <div class="data-row">
+            <span class="label">WEIGHT:</span>
+            <span class="value">{{pokemon.getPeso()}} KG</span>
+        </div>
     </div>
 </div>

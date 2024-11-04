@@ -1,60 +1,51 @@
-<!-- src/app/Components/pokedex-view/pokedex-view.component.html -->
-<div class="pokedex-container pixel-art">
-    <div class="pokedex-outer">
-        <!-- Luces LED de la Pokédex -->
-        <div class="led-lights">
-            <div class="led big-led"></div>
-            <div class="led red"></div>
-            <div class="led yellow"></div>
-            <div class="led green"></div>
-        </div>
-
-        <!-- Pantalla principal -->
-        <div class="main-screen">
-            <div class="screen-border">
-                <div class="screen-inner">
-                    <app-pokedex [pokemon]="currentPokemon" [isAnimating]="isAnimating"
-                        (imageError)="handleImageError()"></app-pokedex>
-                </div>
+<div class="pokedex-container">
+    <div class="pokedex-outer" [style.background]="getPokemonTypeColor(currentPokemon.getTipo()[0])">
+        <div class="top-section">
+            <div class="big-light blinking"></div>
+            <div class="small-lights">
+                <div class="small-light red"></div>
+                <div class="small-light yellow"></div>
+                <div class="small-light green"></div>
             </div>
         </div>
 
-        <!-- Mensaje de error -->
-        <div *ngIf="errorMessage" class="error-message pixel-text">
-            {{ errorMessage }}
-            <button (click)="clearError()" class="pixel-button">OK</button>
+        <div class="main-screen">
+            <div class="screen-container">
+                <div class="screen-overlay"></div>
+                <app-pokedex [pokemon]="currentPokemon" [isAnimating]="isAnimating" (imageError)="handleImageError()">
+                </app-pokedex>
+            </div>
+
+            <div class="error-message" *ngIf="errorMessage">
+                {{ errorMessage }}
+                <button (click)="clearError()" class="pixel-button">Cerrar</button>
+            </div>
         </div>
 
-        <!-- Controles -->
         <div class="controls-section">
             <div class="d-pad">
-                <button class="d-pad-button up" (click)="handlePokemon(1)"></button>
-                <button class="d-pad-button right" (click)="handlePokemon(1)"></button>
-                <button class="d-pad-button down" (click)="handlePokemon(-1)"></button>
-                <button class="d-pad-button left" (click)="handlePokemon(-1)"></button>
+                <button class="d-pad-up" (click)="handlePokemon(1)"></button>
+                <button class="d-pad-right" (click)="handlePokemon(1)"></button>
+                <button class="d-pad-down" (click)="handlePokemon(-1)"></button>
+                <button class="d-pad-left" (click)="handlePokemon(-1)"></button>
             </div>
             <div class="action-buttons">
-                <button class="action-button blue" (click)="toggleSound()">
-                    <i [class]="isSoundOn ? 'pixel-icon volume-up' : 'pixel-icon volume-mute'"></i>
-                </button>
-                <button class="action-button green" (click)="toggleAnimation()">
-                    <i [class]="isAnimating ? 'pixel-icon pause' : 'pixel-icon play'"></i>
+                <button class="action-btn btn-green" (click)="toggleAnimation()">
+                    <i [class]="isAnimating ? 'fas fa-pause' : 'fas fa-play'"></i>
                 </button>
             </div>
         </div>
-
-        <!-- Panel de información -->
-        <div class="info-panel pixel-text">
+        <div class="info-panel">
             <div class="pokemon-id">#{{ currentPokemon.getId().toString().padStart(3, '0') }}</div>
-            <div class="pokemon-name">{{ currentPokemon.getNombre() | uppercase }}</div>
+            <div class="pokemon-name">{{ currentPokemon.getNombre() | titlecase }}</div>
             <div class="pokemon-types">
-                <span *ngFor="let tipo of currentPokemon.getTipo()" class="type-badge pixel-badge">
+                <span *ngFor="let tipo of currentPokemon.getTipo()" class="type-badge"
+                    [style.background-color]="getPokemonTypeColor(tipo)">
                     {{ tipo }}
                 </span>
             </div>
         </div>
 
-        <!-- Pantalla de estadísticas -->
         <div class="stats-screen">
             <app-grafico [pokemon]="currentPokemon"></app-grafico>
         </div>

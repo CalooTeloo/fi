@@ -1,5 +1,3 @@
-/* src/app/Components/pokedex-view/pokedex-view.component.css */
-
 :root {
     --pokedex-red: #CE1C24;
     --pokedex-dark-red: #AB1A22;
@@ -10,52 +8,57 @@
     --button-yellow: #FFD700;
 }
 
-.pixel-art {
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-}
-
 .pokedex-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #f0f0f0 url('path/to/pixel-background.png') repeat;
     padding: 20px;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .pokedex-outer {
-    width: 320px;
-    height: 480px;
+    width: 800px;
+    height: 600px;
     background: var(--pokedex-red);
-    border: 8px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 20px;
     position: relative;
     overflow: hidden;
     box-shadow:
-        inset -4px -4px 0 0 var(--pokedex-dark-red),
-        inset 4px 4px 0 0 #FFFFFF;
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
 }
 
-/* LED Lights */
-.led-lights {
+/* Top section */
+.top-section {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.led {
-    width: 12px;
-    height: 12px;
+.big-light {
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle at 30% 30%, #7ec0ee, #4a90e2);
     border-radius: 50%;
-    border: 2px solid #000;
+    border: 5px solid white;
+    box-shadow:
+        0 0 10px #4a90e2,
+        inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.big-led {
+.small-lights {
+    display: flex;
+    gap: 10px;
+}
+
+.small-light {
     width: 20px;
     height: 20px;
-    background: radial-gradient(circle at 30% 30%, #7ec0ee, #4a90e2);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .red {
@@ -70,181 +73,187 @@
     background: radial-gradient(circle at 30% 30%, #48dbfb, #0abde3);
 }
 
-/* Main Screen */
+/* Main screen */
 .main-screen {
-    background: var(--screen-bg);
-    border: 4px solid var(--border-color);
-    border-radius: 8px;
-    height: 200px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
     margin-bottom: 20px;
-    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.screen-container {
+    background: var(--screen-bg);
+    height: 300px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-}
-
-.screen-border {
-    border: 4px solid #000;
-    height: 100%;
-    padding: 8px;
-}
-
-.screen-inner {
-    background: #FFFFFF;
-    height: 100%;
     overflow: hidden;
 }
 
-/* Controls */
+.screen-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.1) 2%,
+            transparent 2%,
+            transparent 98%,
+            rgba(255, 255, 255, 0.1) 98%,
+            rgba(255, 255, 255, 0.1) 100%);
+    pointer-events: none;
+}
+
+/* Controls section */
 .controls-section {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    align-items: center;
 }
 
 .d-pad {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     position: relative;
     background: var(--border-color);
     border-radius: 50%;
 }
 
-.d-pad-button {
+.d-pad button {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background: #444;
     border: none;
     cursor: pointer;
 }
 
-.d-pad-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-}
-
-.d-pad-button.up {
+.d-pad-up {
     top: 0;
-    left: 35px;
+    left: 40px;
+    border-radius: 5px 5px 0 0;
 }
 
-.d-pad-button.right {
+.d-pad-right {
     right: 0;
-    top: 35px;
+    top: 40px;
+    border-radius: 0 5px 5px 0;
 }
 
-.d-pad-button.down {
+.d-pad-down {
     bottom: 0;
-    left: 35px;
+    left: 40px;
+    border-radius: 0 0 5px 5px;
 }
 
-.d-pad-button.left {
+.d-pad-left {
     left: 0;
-    top: 35px;
+    top: 40px;
+    border-radius: 5px 0 0 5px;
 }
 
-/* Flechas del D-pad */
-.d-pad-button.up::after {
-    border-width: 0 8px 8px 8px;
-    border-color: transparent transparent #fff transparent;
-}
-
-.d-pad-button.right::after {
-    border-width: 8px 0 8px 8px;
-    border-color: transparent transparent transparent #fff;
-}
-
-.d-pad-button.down::after {
-    border-width: 8px 8px 0 8px;
-    border-color: #fff transparent transparent transparent;
-}
-
-.d-pad-button.left::after {
-    border-width: 8px 8px 8px 0;
-    border-color: transparent #fff transparent transparent;
-}
-
-/* Botones de acción */
 .action-buttons {
     display: flex;
-    gap: 15px;
+    gap: 20px;
 }
 
-.action-button {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #000;
+.action-btn {
+    width: 60px;
+    height: 60px;
+    border: none;
     border-radius: 50%;
     cursor: pointer;
-    position: relative;
-    transition: transform 0.1s;
+    box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.2),
+        inset 0 4px 4px rgba(255, 255, 255, 0.2);
+    transition: all 0.1s;
 }
 
-.action-button::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+.action-btn:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 0 0 rgba(0, 0, 0, 0.2),
+        inset 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-.action-button:active {
-    transform: scale(0.95);
+.btn-green {
+    background: var(--button-green);
 }
 
-/* Panel de información */
+/* Info panel */
 .info-panel {
-    background: #000;
-    border: 4px solid var(--border-color);
-    border-radius: 8px;
-    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 15px;
     margin-top: 20px;
-    color: var(--screen-bg);
-    font-family: 'Press Start 2P', monospace;
 }
 
 .pokemon-id {
-    font-size: 12px;
-    margin-bottom: 5px;
+    font-size: 14px;
+    color: #666;
 }
 
 .pokemon-name {
-    font-size: 14px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
+    font-size: 24px;
+    color: var(--text-color);
+    margin: 10px 0;
+}
+
+.pokemon-types {
+    display: flex;
+    gap: 10px;
 }
 
 .type-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    margin: 2px;
-    border: 2px solid #000;
-    background: var(--button-blue);
-    color: #fff;
-    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: white;
     text-transform: uppercase;
 }
 
-/* Efectos pixelados */
-.pixel-text {
-    font-family: 'Press Start 2P', monospace;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+/* Stats screen */
+.stats-screen {
+    background: #e0e0e0;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.pixel-badge {
-    image-rendering: pixelated;
-    border-image: url('path/to/pixel-border.png') 2 stretch;
+/* Error message */
+.error-message {
+    background-color: #ffcccc;
+    border: 1px solid #ff0000;
+    color: #ff0000;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
 }
 
-/* Animaciones */
+.pixel-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Animations */
 @keyframes blink {
 
     0%,
@@ -261,17 +270,34 @@
     animation: blink 1s infinite;
 }
 
-/* Media Queries */
-@media (max-width: 480px) {
+/* Responsive design */
+@media (max-width: 850px) {
     .pokedex-outer {
-        width: 100%;
+        width: 95%;
         height: auto;
-        min-height: 480px;
     }
 
     .controls-section {
         flex-direction: column;
-        align-items: center;
         gap: 20px;
+    }
+
+    .screen-container {
+        height: 250px;
+    }
+
+    .d-pad {
+        width: 100px;
+        height: 100px;
+    }
+
+    .d-pad button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .action-btn {
+        width: 50px;
+        height: 50px;
     }
 }
