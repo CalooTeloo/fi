@@ -52,7 +52,7 @@ export class PokedexViewComponent implements OnInit {
     this.currentPokemon = new PokemonModel(
       data.id,
       data.name,
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`, // URL de la imagen
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
       data.stats.find((stat: any) => stat.stat.name === 'hp').base_stat,
       data.stats.find((stat: any) => stat.stat.name === 'attack').base_stat,
       data.stats.find((stat: any) => stat.stat.name === 'defense').base_stat,

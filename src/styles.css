@@ -2,16 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 :root {
-    /* Paleta de colores retro */
-    --pokedex-red: #ff0000;
-    --pokedex-dark-red: #cc0000;
-    --screen-green: #9BBC0F;
-    --screen-darker-green: #8BAC0F;
-    --border-color: #0f380f;
-    --pixel-border: #306230;
-    --button-blue: #0000ff;
-    --button-shadow: #000033;
-    --text-color: #306230;
+    --pokedex-red: #FF0000;
+    --pokedex-dark-red: #CC0000;
+    --pokedex-blue: #0000FF;
+    --pokedex-yellow: #FFD700;
+    --pokedex-black: #000000;
+    --screen-green: #48D0B0;
+    --text-color: #FFFFFF;
 }
 
 * {
