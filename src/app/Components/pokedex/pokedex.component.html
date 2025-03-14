@@ -1,17 +1,25 @@
 <div class="pokemon-display">
+    <!-- Contenedor de la imagen del Pokémon -->
     <div class="sprite-container" [class.animating]="isAnimating">
+        <!-- Imagen del Pokémon -->
+        <!-- Se muestra si hay una URL de imagen -->
         <img *ngIf="currentSpriteUrl" [src]="currentSpriteUrl" [alt]="pokemon.getNombre()" (load)="onImageLoad()"
             (error)="onImageError()" class="pokemon-sprite" />
+        <!-- Muestra un texto mientras la imagen esta cargando-->
         <div *ngIf="isLoading" class="loading-overlay">
             <div class="loading-text">LOADING...</div>
         </div>
     </div>
 
+    <!-- Contenedor de los datos del Pokémon -->
     <div class="pokemon-data">
+        <!-- Fila de datos para la altura -->
         <div class="data-row">
+             <!-- Etiqueta que indica de que dato es-->
             <span class="label">HEIGHT:</span>
-            <span class="value">{{pokemon.getAltura()}} M</span>
+            <span class="value">{{pokemon.getAltura()}} M</span> <!-- Muestra la altura del pokemon-->
         </div>
+        <!-- Fila de datos para el peso -->
         <div class="data-row">
             <span class="label">WEIGHT:</span>
             <span class="value">{{pokemon.getPeso()}} KG</span>

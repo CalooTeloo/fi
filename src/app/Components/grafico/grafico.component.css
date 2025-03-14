@@ -68,6 +68,5 @@
 /* Efectos pixelados adicionales */
 .pixel-fill {
     image-rendering: pixelated;
-    background-image: url('path/to/pixel-pattern.png');
     background-size: 4px 4px;
 }

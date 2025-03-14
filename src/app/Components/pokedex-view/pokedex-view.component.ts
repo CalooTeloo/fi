@@ -19,11 +19,12 @@ export class PokedexViewComponent implements OnInit {
   spriteKeys: string[] = ['default', 'shiny', 'backDefault', 'backShiny', 'officialArtwork', 'dreamWorld', 'homeDefault', 'homeShiny'];
 
   constructor() {
+    // Inicializa el Pokémon con un ID y nombre por defecto
     this.currentPokemon = new PokemonModel(1, "Bulbasaur", {}, 45, 49, 49, 45, ["Grass", "Poison"], 0.7, 6.9);
   }
 
   ngOnInit() {
-    this.fetchPokemonData(1);
+    this.fetchPokemonData(1); // Carga el Pokémon inicial
   }
 
   handlePokemon(direction: number) {
@@ -65,10 +66,10 @@ export class PokedexViewComponent implements OnInit {
       data.id,
       data.name,
       images,
-      data.stats.find((stat: any) => stat.stat.name === 'hp').base_stat,
-      data.stats.find((stat: any) => stat.stat.name === 'attack').base_stat,
-      data.stats.find((stat: any) => stat.stat.name === 'defense').base_stat,
-      data.stats.find((stat: any) => stat.stat.name === 'speed').base_stat,
+      data.stats.find((stat: any) => stat.stat.name === 'hp')?.base_stat || 0,
+      data.stats.find((stat: any) => stat.stat.name === 'attack')?.base_stat || 0,
+      data.stats.find((stat: any) => stat.stat.name === 'defense')?.base_stat || 0,
+      data.stats.find((stat: any) => stat.stat.name === 'speed')?.base_stat || 0,
       data.types.map((type: any) => type.type.name),
       data.height / 10,
       data.weight / 10
@@ -97,7 +98,7 @@ export class PokedexViewComponent implements OnInit {
       rock: '#B8A038', ghost: '#705898', dragon: '#7038F8',
       dark: '#705848', steel: '#B8B8D0', fairy: '#EE99AC'
     };
-    return typeColors[type.toLowerCase()] || '#A8A878';
+    return typeColors[type.toLowerCase()] || '#A8A878'; // Color por defecto
   }
 
   changeSprite(direction: number) {
@@ -110,6 +111,6 @@ export class PokedexViewComponent implements OnInit {
 
   getCurrentSpriteUrl(): string {
     const currentKey = this.getCurrentSpriteKey();
-    return this.currentPokemon.getImagen()[currentKey] || '';
+    return this.currentPokemon.getImagen()[currentKey] || ''; // Devuelve la URL de la imagen actual
   }
 }

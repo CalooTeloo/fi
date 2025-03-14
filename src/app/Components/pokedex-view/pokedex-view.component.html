@@ -1,29 +1,47 @@
+<!-- Contenedor principal de la vista de la Pokedex -->
 <div class="pokedex-container">
+    <!-- Parte externa de la Pokedex que cambia de color según el tipo del Pokémon -->
     <div class="pokedex-outer" [style.background]="getPokemonTypeColor(currentPokemon.getTipo()[0])">
+        <!-- Sección superior con luces decorativas -->
         <div class="top-section">
+            <!-- Luz grande que parpadea -->
             <div class="big-light blinking"></div>
+            <!-- Conjunto de luces pequeñas -->
             <div class="small-lights">
+                <!-- Luz pequeña roja -->
                 <div class="small-light red"></div>
+                <!-- Luz pequeña amarilla -->
                 <div class="small-light yellow"></div>
+                <!-- Luz pequeña verde -->
                 <div class="small-light green"></div>
             </div>
         </div>
 
+        <!-- Pantalla principal de la Pokedex -->
         <div class="main-screen">
+            <!-- Contenedor de la pantalla -->
             <div class="screen-container">
+                <!-- Capa que oscurece la pantalla -->
                 <div class="screen-overlay"></div>
+                <!-- Componente que muestra la imagen del Pokémon -->
                 <app-pokedex [pokemon]="currentPokemon" [isAnimating]="isAnimating"
                     [currentSpriteUrl]="getCurrentSpriteUrl()" (imageError)="handleImageError($event)">
                 </app-pokedex>
             </div>
 
+            <!-- Mensaje de error (si hay) -->
             <div class="error-message" *ngIf="errorMessage">
+                <!-- Muestra el texto del error -->
                 {{ errorMessage }}
+                <!-- Botón para cerrar el mensaje de error -->
                 <button (click)="clearError()" class="pixel-button">Cerrar</button>
             </div>
+            
         </div>
 
+        <!-- Sección de controles de la Pokedex -->
         <div class="controls-section">
+            <!-- Botones direccionales -->
             <div class="d-pad">
                 <button class="d-pad-up" (click)="handlePokemon(1)"></button>
                 <button class="d-pad-right" (click)="changeSprite(1)"></button>
@@ -31,23 +49,30 @@
                 <button class="d-pad-left" (click)="changeSprite(-1)"></button>
             </div>
             <div class="action-buttons">
+                <!-- Botón para pausar/reproducir la animación -->
                 <button class="action-btn btn-green" (click)="toggleAnimation()">
                     <i [class]="isAnimating ? 'fas fa-pause' : 'fas fa-play'"></i>
                 </button>
             </div>
         </div>
 
+        <!-- Panel de información del Pokémon -->
         <div class="info-panel">
+            <!-- ID del Pokémon con formato de 3 dígitos -->
             <div class="pokemon-id">#{{ currentPokemon.getId().toString().padStart(3, '0') }}</div>
+            <!-- Nombre del Pokémon (con la primera letra en mayúscula) -->
             <div class="pokemon-name">{{ currentPokemon.getNombre() | titlecase }}</div>
+            <!-- Tipos del Pokémon -->
             <div class="pokemon-types">
+                <!-- Muestra cada tipo como una etiqueta -->
                 <span *ngFor="let tipo of currentPokemon.getTipo()" class="type-badge"
-                    [style.background-color]="getPokemonTypeColor(tipo)">
+                    [style.background-color]="getPokemonTypeColor(tipo)">    <!--El color de fondo de cada etiqueta depende del tipo -->
                     {{ tipo }}
                 </span>
             </div>
         </div>
 
+        <!-- Pantalla de estadísticas del Pokémon -->
         <div class="stats-screen">
             <app-grafico [pokemon]="currentPokemon"></app-grafico>
         </div>

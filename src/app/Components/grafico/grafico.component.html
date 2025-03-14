@@ -1,20 +1,32 @@
 <!-- src/app/Components/grafico/grafico.component.html -->
+<!-- Este es el contenedor principal donde se muestran todas las estadisticas del pokemon -->
 <div class="stats-container pixel-art">
+    <!-- Esta seccion muestra detalles como la altura y el peso -->
     <div class="pokemon-details">
+        <!-- Muestra la altura del pokemon -->
         <div class="detail-row">
+            <!-- Etiqueta que dice "HT" que significa "Altura" -->
             <span class="detail-label">HT</span>
+            <!-- Aqui se muestra el valor de la altura en metros -->
             <span class="detail-value">{{pokemon.getAltura()}}m</span>
         </div>
+        <!-- Muestra el peso del pokemon -->
         <div class="detail-row">
+            <!-- Etiqueta que dice "WT" que significa "Peso" -->
             <span class="detail-label">WT</span>
+            <!-- Aqui se muestra el valor del peso en kilogramos -->
             <span class="detail-value">{{pokemon.getPeso()}}kg</span>
         </div>
     </div>
-
+    <!-- Esta seccion es la cuadricula donde se representan las estadisticas -->
     <div class="stats-grid">
+        <!-- Se repite para cada estadistica del pokemon -->
         <div class="stat-bar" *ngFor="let stat of statsPercentages | keyvalue">
+            <!-- Muestra el nombre de la estadistica -->
             <label class="stat-label">{{stat.key}}</label>
+             <!-- Contenedor de la barra de la estadistica -->
             <div class="stat-track">
+                 <!-- Esta es la barra de relleno que muestra el valor de la estadistica -->
                 <div class="stat-fill pixel-fill" [style.width.%]="stat.value"
                     [style.background-color]="getStatColor(stat.value)">
                     <span class="stat-value">{{stat.value | number:'1.0-0'}}</span>
